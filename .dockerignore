@@ -1,0 +1,5 @@
+!nginx-unit/
+datadir/
+Dockerfile
+docker-compose.*
+README.md

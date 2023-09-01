@@ -1,0 +1,72 @@
+{
+    "listeners": {
+        "*:80": {
+            "pass": "routes"
+        },
+        "*:443": {
+            "pass": "routes",
+            "tls": {
+                "certificate": "bundle"
+            }
+        }
+    },
+    "routes": [
+        {
+            "match": {
+                "uri": [
+                    "!~^/api/*",
+                    "!~^/live/*"
+                ]
+            },
+            "action": {
+                "share": [
+                    "/www/react-app/dist$uri"
+                ],
+                "fallback": {
+                    "share": "/www/react-app/dist/index.html"
+                },
+                "index": "index.html"
+            }
+        },
+        {
+            "match": {
+                "uri": [
+                    "~^/live/*"
+                ]
+            },
+            "action": {
+                "share": [
+                    "/www/react-app/$uri"
+                ],
+                "index": "index.html"
+            }
+        },
+        {
+            "match": {
+                "uri": [
+                    "~^/api/*"
+                ]
+            },
+            "action": {
+                "share": "/www/public$uri",
+                "fallback": {
+                    "pass": "applications/symfony/index"
+                }
+            }
+        }
+    ],
+    "applications": {
+        "symfony": {
+            "type": "php",
+            "targets": {
+                "direct": {
+                    "root": "/www/public/"
+                },
+                "index": {
+                    "root": "/www/public/",
+                    "script": "index.php"
+                }
+            }
+        }
+    }
+}

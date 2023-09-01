@@ -1,0 +1,10 @@
+#root {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.line-broken-errors {
+  white-space: pre;
+  white-space: pre-line;
+}
